@@ -1,0 +1,227 @@
+---
+title: 'Cloud Infrastructure Foundations'
+id: 4
+date: Jul 2024
+img: 'https://img.freepik.com/premium-photo/iceberg-is-water-word-ice-is-visible-bottom_549702-3218.jpg'
+description: 'There is no cloud it’s just someone else’s computer!'
+published: true
+---
+
+## ☁️ Cloud Infrastructure Foundations <figure>-- Oracle Cloud Infrastructure Foundations</figure>
+
+![alt img](https://i.pinimg.com/736x/5c/f5/53/5cf55384fe270583721a925a6036959c.jpg)
+
+### Overview
+
+#### Architecture
+
+OCI is hosted in regions and availability domains. A **region** is a localized geographic area, and an **availability domain** one or more data centers located within a region. A region is composed of one or more availability domains. Most of resources are either region-specific (virtual cloud network **VCN**) or availability domain-specific (compute instance).
+
+The availability domains within the same region are connected to each other by a low latency, high bandwidth network, which makes it possible for us to provide high-availability connectivity to the internet.
+
+As regions require expansion, we have the option to add capacity to existing availability domains, to add additional availability domains to an existing region, or to build a new region.
+
+Regions are independent of other regions and can be separated by vast distances across countries or even continents. Generally, we would deploy an application in the region where it is most heavily used, because using nearby resources is faster than using distance resources.
+
+A virtual cloud network (**VCN**) is the system that has devices, VMs, servers and data centers linked and controlled using wireless technology and software. with **VCN**, an organization can expand their network as they see fit, without having to sacrifice efficiency and functionality.
+
+In a traditional physical network, we use a LAN to connect several devices to our resources. This may include elements such as network storage, routers, or a sever. We would have either use Ethernet connections or WiFi to connect each device to the network.
+
+However, with virtual networking, we can have virtual LAN (**VLAN**) that facilitates all connections using software.
+
+#### Fault Domains
+
+A fault domain is a grouping of hardware and infrastructure within an availability domain, each availability domain contains three fault domains. Fault domains provide anti-affinity: they let us distribute the instances so that the instances are not on the same physical hardware within a single availability domain.
+
+Use fault domains to: Protect against unexpected hardware failure, Protect against planned outage because of Compute hardware maintenance.
+
+ 
+
+#### Distributed Cloud
+
+Traditional cloud computing is the delivery of IT resources and services on demand, including server, storage or databases ... These services are typically provided over the public internet or private network connection from one of many hyper-scale cloud providers. Cloud services can be categorized as public cloud, private cloud (including on-premises data centers), hybrid cloud (the combination of public and private), and multi-cloud (including multiple public cloud providers).
+
+Hence Distributed Cloud discards the categories of public, hybrid and multi-cloud. The distributed cloud presents to the user organization as a single cloud platform, but in reality, it is comprised of multiple components that can include them all. These varied elements are all managed as one by the primary cloud provider and consumed as one by the ultimate customer.
+
+There are actually many benefits of distributed cloud, such as
+
+- Increased compliance (distributed by nature, workloads, and data can be located where they must be to meet regulatory demands)
+
+- Increased up-time (they can be isolated from a crashed system to provide redundancy)
+
+- Scalability (adding VMs of nodes as needed rapid scalability and improves the availability if the cloud system as a whole)
+
+- Flexibility (simplifying the installation, deployment and debugging of new services)
+
+- Faster processing (leveraging compute of multiple systems for a given task)
+
+- Performance (higher performance and better cost performance)
+
+
+#### IAM Service (Identity & Access Management)
+
+Identity and access management is the process of making sure every user on the network has the correct level of verification of resources, secure data access, and additional information they need.
+
+There are two key aspects to this service; authentication (**AuthN**), and authorization (**AuthZ**). Basically what this service ensures is making sure that a person is who they claim to be. and as far as authorization is concerned, what the service does is it allows a user to be assigned one more pre-determined roles, and each role comes with a set of permissions.
+
+#### Compartments
+
+Compartments are used to organize resources logically in a container. by default a root compartment is created for each tenancy (account), with the same name as the tenancy, and they are tenancy-wide, across regions. when a compartment is created, it is available in every region that the tenancy is subscribed to.
+
+There is network compartment, storage compartment. and the idea is, we create these for isolation and controlling access. and we could keep a collection of related resources in specific compartments. So the network resource has network compartment, and storage compartment has storage resource.
+
+### VCN Virtual Cloud Network
+
+#### VCN Security
+
+Security lists act as a virtual firewalls for a compute instances and other kind of resources. It consists of a set of ingress and egress security rules that apply to all VNICs in a given subnet are subject to the same set of security lists.
+
+Each VCN comes with a default security list that has several default rules for essentials traffic. If a custom security list is not specified for a subnet, the default security list is automatically used with that subnet, then rules can be added and removed from default security list.
+
+Network security group act as a virtual firewall for a compute instances and other kind of resources. It consists of a set of ingress and egress security rules that apply only to a set of a chosen VNICs in a single VCN. 
+
+Compared to security lists, NSGs let us separate VCN’s subnet architecture from the application security requirements.
+
+Unlike with security lists, the VCN does not have a default NSG. Also each NSG created is initially empty, it has no default security rules.
+
+#### Load Balancing
+
+Load balancing is the process of distributing client requests across multiple servers. Whether hardware or software, the concept is the same. Load balancers act as a reverse proxy for client requests, parceling out requests across servers to avoid resource exhaustion.
+
+With HTTP/S load balancing, the **NodeBalancer** examines each packet’s application layer HTTP headers to decide how to route client requests to back-end servers. Besides improving app performance, availability and horizontal scalability for web apps.
+
+TCP load balancing algorithms use a client request’s destination TCP port number to make forwarding decisions, it’s capable of handling millions of requests per second while maintaining ultra-low latencies. Network load balancer is optimized to handle sudden and volatile traffic patterns while using a single static IP address per **Availability Zone**
+
+#### Compute Instance
+
+Compute is a Linux/Windows machine created on the cloud with a shape that we can use to deploy various services depending on application requirements. Compute machines have **OCPU**, memory, storage and boot volumes attach to it which defines the shape of an instance, the storage volumes can be attached and detached.
+
+There are three types of instances in:
+
+1- Bare Metal Instance: direct access to the underlying hardware. It gives a dedicated physical server for highest performance & strong isolation, usually used for heavy workloads.
+
+2- Virtual Machine Instance: runs on top of Bare Metal hardware, there is a hypervisor on top of Bare metal server to virtualize it in smaller VMs. VMs are ideal for running apps that do not require the performance and resources (CPU, memory, network, bandwidth, storage) of an entire physical machine.
+
+3- Dedicated VM Host: the combination of Bare Metal and Virtual Machine, virtual VMs are running on Bare Metal and the whole server is dedicated to a single host.
+
+When a computer instance is created, we can select the most appropriate type of compute instance for our applications based on characteristics such as the number of CPUs, amount of memory, and network resources. It can be also accessible securely from a computer to restart, attach or detach volumes, and delete it when done with it.
+
+#### Container Engine for Kubernetes
+
+Cloud infrastructure container engine for Kubernetes is a fully-managed, scalable and highly available service used to deploy a containerized application to the cloud. It’s used to reliably build, deploy or manage cloud-native applications. They must be specified to run either on virtual nodes or managed nodes, and container engine for Kubernetes provisions them in an existing tenancy.
+
+#### Container Workloads in OCI
+
+A simple way to run a containerized application without using Kubernetes, is provisioning a virtual machine, installing a container runtime, then running the apps on it. However this process increases the operational complexity, as the VMs and servers needed to be managed.
+
+OCI has capability called OCI container instances, and these container instances offer the quickest and most straightforward way to launch containers without the need to handle VMs or adopt more advanced services. By eliminating the operational complexity, OCI container instances enable users to run containerized applications without having to manage infrastructures. User only need to supply the container for their applications and OCI takes care of the underlying container runtime and compute resources.
+
+#### Functions as-a-Service FaaS
+
+Serverless computing allows developers to build and run applications without having to manage cloud infrastructure. There are still servers in serverless, but the are abstracted away from app development. Using a serverless model a cloud provider handles the routine work of provisioning, maintaining and scaling the server infrastructure and developers can focus on code for development.
+
+Functions as a Service (FaaS) and serverless are often referred to synonymously, but they actually have two specific definitions. While serverless refers to any category where the server is fully abstracted from end-user, FaaS is a subnet of serverless computing that’s focused on event-driven triggers where code runs in response to events or requests. If there is no event-driven request, the server shuts down, making its resources available for other requests. Once deployed, FaaS responds to demand and automatically scales up and down as needed. Typically, when a serverless function is sitting idle, it doesn’t cost anything, saving money in many solutions.
+
+Early applications were typically written using a monolithic architecture. This meant that the application was structured as a single execution that had to be triggered all at once. Over time, developers have increasingly shifted to using microservices. **Microservices** are a collection of modules that are independently deployable, because they can be worked on individually, they are easier to test and maintain.
+
+A function is essentially a microservice that can only perform one action in response to an event. With FaaS, the provider will spin up a server when a function is triggered. It will execute the function, then shut down the server.
+
+#### Storage
+
+Cloud storage is delivered by a cloud provider that owns and operates data storage capacity by maintaining large data centers in multiple locations around the world. Cloud storage providers manage capacity, security and durability to male data accessible to the applications over the internet in a pay-as-you-go model. They might also offer services designed to help collect, manage, secure and analyze data at a massive scale.
+
+![img alt](https://static.readerscave.com/2017/03/cloud-computing-jokes-04.jpeg)
+
+ 
+
+**Object storage:** As the amount of understructured data continues to grow, finding a scalable, efficient and affordable ways to store it can be a challenge. Object storage is an architecture for large stores of unstructured data. The objects store data in the format it arrives in and make it possible to customize metadata in ways that make the data easier to access and analyze. Instead of being organized in files or folders hierarchies, objects are kept in secure buckets that deliver virtually unlimited scalability, it also less costly to storage large data volumes.
+
+**Block storage:** Data is stored in blocks, with each block is assigned a unique address, which is then used by the management app controlled by the server’s OS to retrieve and compile data into files upon request. Block storage offers efficiency due to the way blocks can be distributed across multiple systems and even configured to work with different OSs
+
+**File storage:** Widely used among applications and stores data as a hierarchical collection of documents organized into name directories.
+
+### Security
+
+Cloud security includes a comprehensive range of security policies, procedures, tools and technologies designed to protect user’s sensitive data, apps and infrastructure within cloud computing environment.
+
+Cloud security services are designed to eliminate security risks and a wide range of threats, such as data breaches, unauthorized access and other security vulnerabilities, and ensure compliance with established security standards. They address specific aspects of security to strengthen the overall safety of cloud systems.
+
+#### Cloud Guard
+
+Cloud guard is cloud native service that helps customers monitor, identify, achieve and maintain a strong security posture on cloud. The service is used to examine the cloud infrastructure resources for security weakness related to configuration, and cloud operators and risky activities. Upon detection, cloud guard can suggest, assist or take corrective actions, based on setup configuration.
+
+#### Cloud Encryption
+
+Cloud encryption protects sensitive informations as it traverses the internet or rests in the cloud. Encryption algorithms can transform data of any type into an encoded format that requires a decryption key to decipher. This way, even if an attacker intercepts or exfiltrates data, it’s useless to them unless they can decrypt it.
+
+### Governance and Administration
+
+Leveraging the cloud’s potential lies in understanding the nuances of cloud pricing models. Different cloud providers offer various cloud cost models, depending on the resources and services they offer. Selecting an appropriate cloud pricing model is pivotal in nurturing the business’s expansion and adaptability.
+
+#### Cloud Cost Models
+
+Cloud pricing models are methods by which cloud costs are calculated and charged. Cloud providers assign different cloud computing pricing models to different services, each based on the service provided and user interaction with the service. Pricing for cloud services is the rate users are charged for the cloud service, and it’s based on Stock Keeping Units which are the most basic unit of the buying service. Some of the most essential factors providers use to calculate pricing for cloud service:
+
+- Type of cloud service
+
+- Provider’s business model
+
+- Market competition and demand
+
+- Level of user engagement with the service
+
+Based on these factors, cloud pricing models are categorized into different types, the most important and common ones being:
+
+- Time-Based Cloud Cost Models: determines prices based on time of usage.
+
+- Unit-Based Cloud Cost Models: determines prices on units of usage, like storage, resource units or number of users.
+
+#### Cloud Pricing Models
+
+![alt img](https://i.imgflip.com/1c03x7.jpg)
+
+Some of cloud pricing types are:
+
+**Pay-as-You-Go (PAYG)**
+
+Also known as on-demand, the PAYG cloud pricing model allows users to pay only for the resource they are consuming. The billing here is typically by hour, although it can also be by minute or second. PAYG is the most flexible cloud pricing model and does not require long-term commitment, and it provides high quality cloud computing services at affordable prices with high scalability.
+
+**Subscription-Based**
+
+Similar to gym membership, it offers a fixed set of cloud resources for a predetermined fee, typically on monthly or yearly basis. After choosing a package that includes certain storage levels, computing power and other services, them pay a regular, predictable fee regardless of the actual usage.
+
+**Reserved Capacity**
+
+Allows customers to reserve cloud capacity for a predetermined period, typically 1-3 years, in exchange for a significant lower price compared to on-demand pricing. It’s like leasing a car. This model is suitable for businesses with predictable, stable workloads that can accurately predict their cloud usage.
+
+**Spot Pricing**
+
+Think of this as a stock market for cloud resources. Prices fluctuate based on supply and demand, and users can bid for unused cloud capacity at potentially lower prices. However, if demand spikes or someone places a higher bid, the access to resources might be lost. This cloud pricing model is best for non-essential, flexible tasks that can tolerate interruptions.
+
+**Hybrid Billing**
+
+Combines on-premises infrastructure (private cloud) with public cloud services, offering a tailored blend of services. Businesses can keep sensitive operations in-house while using the public cloud for scalable, high-demand tasks. It’s important to note that managing different environments effectively requires strategic planning.
+
+#### Cloud Cost Management
+
+Cloud cost management (also known as cloud cost optimization) is the planning that allows an enterprise to understand and mange the costs and needs associated with cloud technology. In particular, this means finding cost-effective ways to maximize cloud usage and efficiency.
+
+![alt img](https://tsh.io/wp-content/uploads/2022/04/cloud-costs-would-decrease-meme.jpg)
+
+There are many factors that contribute to cloud costs:
+
+- VM instances
+
+- Memory
+
+- Storage
+
+- Network traffic
+
+- training and support
+
+- web services
+
+- software licenses
+
+A strong cloud cost management strategy must take all these factors into account.
