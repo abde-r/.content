@@ -1,23 +1,178 @@
 ---
-title: 'K3s as Cluster Manager'
+title: 'Gophernet: Deploy or Cry'
 id: 3
-date: Jun 2024
-img: 'https://img.freepik.com/premium-photo/iceberg-is-water-word-ice-is-visible-bottom_549702-3218.jpg'
-description: 'K3s as Cluster Manager'
-published: false
+date: Dec 2024
+img: 'https://miro.medium.com/v2/resize:fit:960/1*Omyx9_Tare9Dyhht9m9Ivw.jpeg'
+description: 'Deploy Golang servers with K8s and ingress.'
+published: true
 ---
 
-## ⚓ K3s as Cluster Manager
+## K8s + Go and ingress
 
-![alt img](https://miro.medium.com/v2/resize:fit:786/format:webp/1*WMwxp3HXfx8ivDBTD9KB4A.png)
+![alt img](https://media2.dev.to/dynamic/image/width=1000,height=420,fit=cover,gravity=auto,format=auto/https%3A%2F%2Fdev-to-uploads.s3.amazonaws.com%2Fuploads%2Farticles%2Fogogsdd121qqr5obwtgd.png)
 
-#### K3s and Vagrant
-#### K3s and simple applications
-#### K3d and Argo CD
+#### Deploying Golang servers with K8s and ingress
 
-```tsx
-test code here
-function HelloCode(props) {
-  return <h1>Hello!</h1>;
+##### server.go
+
+```go
+package main
+
+import (
+	"fmt"
+	"net/http"
+	"os"
+)
+
+func homeHandler(w http.ResponseWriter, r *http.Request) {
+	hostname, _ := os.Hostname()
+	pageContent := `
+	<!DOCTYPE html>
+	<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>Greeting App</title>
+		<style>
+			body {
+				font-family: Arial, sans-serif;
+				text-align: center;
+				margin: 50px;
+				background-color: #f4f4f9;
+				color: #333;
+			}
+			.container {
+				background-color: #fff;
+				padding: 20px;
+				border-radius: 10px;
+				box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+			}
+			h1 {
+				color: #007BFF;
+			}
+			p {
+				font-size: 18px;
+			}
+			footer {
+				margin-top: 20px;
+				font-size: 14px;
+				color: #777;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="container">
+			<h1>Greeting App</h1>
+			<img src="https://miro.medium.com/v2/resize:fit:960/1*Omyx9_Tare9Dyhht9m9Ivw.jpeg" alt="img" />
+			<p>Welcome to the Greeting Application!</p>
+			<p>This application is running in a Kubernetes environment.</p>
+		</div>
+		<footer>
+			<p>&copy; 2024 Greeting App | Powered by Go and Kubernetes</p>
+		</footer>
+	</body>
+	</html>
+	`
+
+	fmt.Fprintf(w, pageContent, hostname)
 }
+
+func main() {
+	http.HandleFunc("/", homeHandler)
+
+	port := "8080"
+	fmt.Printf("Starting server on :%s\n", port)
+	if err := http.ListenAndServe(":"+port, nil); err != nil {
+		fmt.Println("Error starting server:", err)
+	}
+}
+```
+
+##### Dockerfile
+
+```docker
+# Build stage
+FROM golang:1.23.6-alpine AS builder
+WORKDIR /app
+
+RUN if [ ! -f go.mod ]; then \
+      go mod init auto/module; \
+    fi
+RUN go mod tidy
+COPY . .
+RUN go build -o server .
+
+# Final image stage
+FROM alpine:latest
+WORKDIR /app
+COPY --from=builder /app/server .
+EXPOSE 8080
+CMD ["./server"]
+```
+
+deployment
+
+```yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: myapp-deployment
+  labels:
+    app: myapp
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: myapp
+  template:
+    metadata:
+      labels:
+        app: myapp
+    spec:
+      containers:
+      - name: myapp
+        image: dockeruser/myapp:latest
+        ports:
+        - containerPort: 8080
+```
+
+##### service
+
+```yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name:  service-myapp
+spec:
+  selector:
+    app: myapp
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 8080
+  type: ClusterIP
+```
+
+##### ingress
+
+```yaml
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ingress-myapp
+  annotations:
+    kubernetes.io/ingress.class: "nginx"
+spec:
+  rules:
+  - host: myapp.com
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: service-myapp
+            port:
+              number: 80
+             number: 80
 ```
