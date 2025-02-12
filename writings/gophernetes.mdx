@@ -152,6 +152,7 @@ spec:
 ```
 <br/>
 **Creating s stable network endpoint for the app using a <ins>**Service.yaml**</ins> file, allowing communication between pods and external clients, ensuring traffic is routed correctly to the running application instances.**
+
 ```yaml
 apiVersion: v1
 kind: Service
@@ -168,6 +169,7 @@ spec:
 ```
 <br/>
 **Managing external access to the application using host-based routing with the use of <ins>**Ingress.yaml**</ins> file, which directs requests to the appropriate service based on the domain name.**
+
 ```yaml
 apiVersion: networking.k8s.io/v1
 kind: Ingress
