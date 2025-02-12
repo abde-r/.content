@@ -1,6 +1,6 @@
 ---
 title: 'Cloud Infrastructure Foundations'
-id: 4
+id: 2
 date: Jul 2024
 img: 'https://i.imgur.com/2rCj5Mt.png'
 description: 'There is no cloud it’s just someone else’s computer!'
@@ -39,23 +39,20 @@ Use fault domains to: Protect against unexpected hardware failure, Protect again
 
 #### Distributed Cloud
 
-Traditional cloud computing is the delivery of IT resources and services on demand, including server, storage or databases ... These services are typically provided over the public internet or private network connection from one of many hyper-scale cloud providers. Cloud services can be categorized as public cloud, private cloud (including on-premises data centers), hybrid cloud (the combination of public and private), and multi-cloud (including multiple public cloud providers).
+Traditional cloud computing is the delivery of IT resources and services on demand, including server, storage or databases ... These services are typically provided over the public internet or private network connection from one of many hyper-scale cloud providers. Cloud services can be categorized as public cloud, private cloud (including on-premises data centers), hybrid cloud (the combination of public and private), and multi-cloud (including multiple public cloud providers).<br/>
+Hence Distributed Cloud discards the categories of public, hybrid and multi-cloud. The distributed cloud presents to the user organization as a single cloud platform, but in reality, it is comprised of multiple components that can include them all. These varied elements are all managed as one by the primary cloud provider and consumed as one by the ultimate customer.<br/><br/>
+There are actually many benefits of distributed cloud, such as:<br/>
+**Increased compliance**: distributed by nature, workloads, and data can be located where they must be to meet regulatory demands.
 
-Hence Distributed Cloud discards the categories of public, hybrid and multi-cloud. The distributed cloud presents to the user organization as a single cloud platform, but in reality, it is comprised of multiple components that can include them all. These varied elements are all managed as one by the primary cloud provider and consumed as one by the ultimate customer.
+**Increased up-time**: they can be isolated from a crashed system to provide redundancy.
 
-There are actually many benefits of distributed cloud, such as
+**Scalability**: adding VMs of nodes as needed rapid scalability and improves the availability if the cloud system as a whole.
 
-- Increased compliance (distributed by nature, workloads, and data can be located where they must be to meet regulatory demands)
+**Flexibility**: simplifying the installation, deployment and debugging of new services.
 
-- Increased up-time (they can be isolated from a crashed system to provide redundancy)
+**Faster processing**: leveraging compute of multiple systems for a given task.
 
-- Scalability (adding VMs of nodes as needed rapid scalability and improves the availability if the cloud system as a whole)
-
-- Flexibility (simplifying the installation, deployment and debugging of new services)
-
-- Faster processing (leveraging compute of multiple systems for a given task)
-
-- Performance (higher performance and better cost performance)
+**Performance**: higher performance and better cost performance.
 
 
 #### IAM Service (Identity & Access Management)
@@ -98,11 +95,11 @@ Compute is a Linux/Windows machine created on the cloud with a shape that we can
 
 There are three types of instances in:
 
-1- Bare Metal Instance: direct access to the underlying hardware. It gives a dedicated physical server for highest performance & strong isolation, usually used for heavy workloads.
+**1- Bare Metal Instance:** direct access to the underlying hardware. It gives a dedicated physical server for highest performance & strong isolation, usually used for heavy workloads.
 
-2- Virtual Machine Instance: runs on top of Bare Metal hardware, there is a hypervisor on top of Bare metal server to virtualize it in smaller VMs. VMs are ideal for running apps that do not require the performance and resources (CPU, memory, network, bandwidth, storage) of an entire physical machine.
+**2- Virtual Machine Instance:** runs on top of Bare Metal hardware, there is a hypervisor on top of Bare metal server to virtualize it in smaller VMs. VMs are ideal for running apps that do not require the performance and resources (CPU, memory, network, bandwidth, storage) of an entire physical machine.
 
-3- Dedicated VM Host: the combination of Bare Metal and Virtual Machine, virtual VMs are running on Bare Metal and the whole server is dedicated to a single host.
+**3- Dedicated VM Host:** the combination of Bare Metal and Virtual Machine, virtual VMs are running on Bare Metal and the whole server is dedicated to a single host.
 
 When a computer instance is created, we can select the most appropriate type of compute instance for our applications based on characteristics such as the number of CPUs, amount of memory, and network resources. It can be also accessible securely from a computer to restart, attach or detach volumes, and delete it when done with it.
 
@@ -130,15 +127,13 @@ A function is essentially a microservice that can only perform one action in res
 
 Cloud storage is delivered by a cloud provider that owns and operates data storage capacity by maintaining large data centers in multiple locations around the world. Cloud storage providers manage capacity, security and durability to male data accessible to the applications over the internet in a pay-as-you-go model. They might also offer services designed to help collect, manage, secure and analyze data at a massive scale.
 
-![img alt](https://static.readerscave.com/2017/03/cloud-computing-jokes-04.jpeg)
-
- 
 
 **Object storage:** As the amount of understructured data continues to grow, finding a scalable, efficient and affordable ways to store it can be a challenge. Object storage is an architecture for large stores of unstructured data. The objects store data in the format it arrives in and make it possible to customize metadata in ways that make the data easier to access and analyze. Instead of being organized in files or folders hierarchies, objects are kept in secure buckets that deliver virtually unlimited scalability, it also less costly to storage large data volumes.
 
 **Block storage:** Data is stored in blocks, with each block is assigned a unique address, which is then used by the management app controlled by the server’s OS to retrieve and compile data into files upon request. Block storage offers efficiency due to the way blocks can be distributed across multiple systems and even configured to work with different OSs
 
 **File storage:** Widely used among applications and stores data as a hierarchical collection of documents organized into name directories.
+![img alt](https://static.readerscave.com/2017/03/cloud-computing-jokes-04.jpeg)<br/>
 
 ### Security
 
@@ -160,68 +155,28 @@ Leveraging the cloud’s potential lies in understanding the nuances of cloud pr
 
 #### Cloud Cost Models
 
-Cloud pricing models are methods by which cloud costs are calculated and charged. Cloud providers assign different cloud computing pricing models to different services, each based on the service provided and user interaction with the service. Pricing for cloud services is the rate users are charged for the cloud service, and it’s based on Stock Keeping Units which are the most basic unit of the buying service. Some of the most essential factors providers use to calculate pricing for cloud service:
+Cloud pricing models are methods by which cloud costs are calculated and charged. Cloud providers assign different cloud computing pricing models to different services, each based on the service provided and user interaction with the service. Pricing for cloud services is the rate users are charged for the cloud service, and it’s based on Stock Keeping Units which are the most basic unit of the buying service. Some of the most essential factors providers use to calculate pricing for cloud service are: Type of cloud service, Provider’s business model, Market competition and demand, Level of user engagement with the service...<br/>
+Based on these factors, cloud pricing models are categorized into different types, the most important and common ones being:<br/><br/>
+**Time-Based Cloud Cost Models: determines prices based on time of usage.**
 
-- Type of cloud service
-
-- Provider’s business model
-
-- Market competition and demand
-
-- Level of user engagement with the service
-
-Based on these factors, cloud pricing models are categorized into different types, the most important and common ones being:
-
-- Time-Based Cloud Cost Models: determines prices based on time of usage.
-
-- Unit-Based Cloud Cost Models: determines prices on units of usage, like storage, resource units or number of users.
+**Unit-Based Cloud Cost Models: determines prices on units of usage, like storage, resource units or number of users.**
 
 #### Cloud Pricing Models
 
-![alt img](https://i.imgflip.com/1c03x7.jpg)
-
 Some of cloud pricing types are:
 
-**Pay-as-You-Go (PAYG)**
+**Pay-as-You-Go (PAYG)**: also known as on-demand, the PAYG cloud pricing model allows users to pay only for the resource they are consuming. The billing here is typically by hour, although it can also be by minute or second. PAYG is the most flexible cloud pricing model and does not require long-term commitment, and it provides high quality cloud computing services at affordable prices with high scalability.
 
-Also known as on-demand, the PAYG cloud pricing model allows users to pay only for the resource they are consuming. The billing here is typically by hour, although it can also be by minute or second. PAYG is the most flexible cloud pricing model and does not require long-term commitment, and it provides high quality cloud computing services at affordable prices with high scalability.
+**Subscription-Based**: similar to gym membership, it offers a fixed set of cloud resources for a predetermined fee, typically on monthly or yearly basis. After choosing a package that includes certain storage levels, computing power and other services, them pay a regular, predictable fee regardless of the actual usage.
 
-**Subscription-Based**
+**Reserved Capacity**: allows customers to reserve cloud capacity for a predetermined period, typically 1-3 years, in exchange for a significant lower price compared to on-demand pricing. It’s like leasing a car. This model is suitable for businesses with predictable, stable workloads that can accurately predict their cloud usage.
 
-Similar to gym membership, it offers a fixed set of cloud resources for a predetermined fee, typically on monthly or yearly basis. After choosing a package that includes certain storage levels, computing power and other services, them pay a regular, predictable fee regardless of the actual usage.
+**Spot Pricing**: think of this as a stock market for cloud resources. Prices fluctuate based on supply and demand, and users can bid for unused cloud capacity at potentially lower prices. However, if demand spikes or someone places a higher bid, the access to resources might be lost. This cloud pricing model is best for non-essential, flexible tasks that can tolerate interruptions.
 
-**Reserved Capacity**
-
-Allows customers to reserve cloud capacity for a predetermined period, typically 1-3 years, in exchange for a significant lower price compared to on-demand pricing. It’s like leasing a car. This model is suitable for businesses with predictable, stable workloads that can accurately predict their cloud usage.
-
-**Spot Pricing**
-
-Think of this as a stock market for cloud resources. Prices fluctuate based on supply and demand, and users can bid for unused cloud capacity at potentially lower prices. However, if demand spikes or someone places a higher bid, the access to resources might be lost. This cloud pricing model is best for non-essential, flexible tasks that can tolerate interruptions.
-
-**Hybrid Billing**
-
-Combines on-premises infrastructure (private cloud) with public cloud services, offering a tailored blend of services. Businesses can keep sensitive operations in-house while using the public cloud for scalable, high-demand tasks. It’s important to note that managing different environments effectively requires strategic planning.
+**Hybrid Billing**: combines on-premises infrastructure (private cloud) with public cloud services, offering a tailored blend of services. Businesses can keep sensitive operations in-house while using the public cloud for scalable, high-demand tasks. It’s important to note that managing different environments effectively requires strategic planning.
 
 #### Cloud Cost Management
 
-Cloud cost management (also known as cloud cost optimization) is the planning that allows an enterprise to understand and mange the costs and needs associated with cloud technology. In particular, this means finding cost-effective ways to maximize cloud usage and efficiency.
-
-![alt img](https://tsh.io/wp-content/uploads/2022/04/cloud-costs-would-decrease-meme.jpg)
-
-There are many factors that contribute to cloud costs:
-
-- VM instances
-
-- Memory
-
-- Storage
-
-- Network traffic
-
-- training and support
-
-- web services
-
-- software licenses
-
+Cloud cost management (also known as cloud cost optimization) is the planning that allows an enterprise to understand and mange the costs and needs associated with cloud technology. In particular, this means finding cost-effective ways to maximize cloud usage and efficiency.<br/>
+There are many factors that contribute to cloud costs such as: VM instances, Memory, Storage, Network traffic, training and support, web services and software licenses.<br/>
 A strong cloud cost management strategy must take all these factors into account.

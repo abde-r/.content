@@ -1,19 +1,32 @@
 ---
-title: 'Gophernet: Deploy or Cry'
+title: 'Gophernetes: Deploy or Cry'
 id: 3
 date: Dec 2024
-img: 'https://miro.medium.com/v2/resize:fit:960/1*Omyx9_Tare9Dyhht9m9Ivw.jpeg'
+img: 'https://images-platform.99static.com/latfs1S-bu_23ZiTjtgk7pntkro=/199x199:1799x1799/500x500/top/smart/99designs-contests-attachments/134/134225/attachment_134225842'
 description: 'Deploy Golang servers with K8s and ingress.'
 published: true
 ---
 
-## K8s + Go and ingress
+## ☸ Gophernetes: Deploy or Cry <figure>-- K8s + Go and Ingress</figure>
+**Deploy Golang servers with K8s and Ingress.**
 
 ![alt img](https://media2.dev.to/dynamic/image/width=1000,height=420,fit=cover,gravity=auto,format=auto/https%3A%2F%2Fdev-to-uploads.s3.amazonaws.com%2Fuploads%2Farticles%2Fogogsdd121qqr5obwtgd.png)
 
-#### Deploying Golang servers with K8s and ingress
 
-##### server.go
+
+### Intro
+Deploying Golang applications with Kubernetes marries the simplicity and efficiency of Go with the powerful orchestration capabilities of Kubernetes, and managing external access with the help of Ingress. This integration not only streamlines the deployment process but also enhances the resilience and scalability of applications.<br/>
+In this writing, we w'll walk through a simple example of deploying a Go app on K8s. We'll cover how containerization and K8s' features like scaling and self-healing, and Ingress routing work together to keep our apps running smoothly, while ensuring seamless external access.
+
+### Desired State
+
+We'll set up three web apps on our K8s cluster. The configuration should ensure that when a client accesses the domain <ins>**app1.com**</ins>, the server displays the first one; when he uses <ins>**app2.com**</ins>, the second application is server and the same for the third one.
+
+### Implementation
+
+#### 1- Building the Application
+
+**We setup a basic HTTP server that listens for requests and responds with a simple message.**
 
 ```go
 package main
@@ -73,7 +86,6 @@ func homeHandler(w http.ResponseWriter, r *http.Request) {
 	</body>
 	</html>
 	`
-
 	fmt.Fprintf(w, pageContent, hostname)
 }
 
@@ -88,7 +100,9 @@ func main() {
 }
 ```
 
-##### Dockerfile
+#### 2- Containerizing The Application
+
+**Creating a lightweight final image which will be pushed to Docker registry and pulled later when deploying the app using the deployment YAML.**
 
 ```docker
 # Build stage
@@ -109,9 +123,10 @@ COPY --from=builder /app/server .
 EXPOSE 8080
 CMD ["./server"]
 ```
+<br/>
 
-deployment
-
+#### 3- Kubernetes Manifest For Deployment
+**Defining in <ins>**Deployment.yaml**</ins> file the way our app runs in Kubernetes, specifying the number of replicas, container image(the one we created in the previous step), and resource settings.**
 ```yaml
 apiVersion: apps/v1
 kind: Deployment
@@ -135,9 +150,8 @@ spec:
         ports:
         - containerPort: 8080
 ```
-
-##### service
-
+<br/>
+**Creating s stable network endpoint for the app using a <ins>**Service.yaml**</ins> file, allowing communication between pods and external clients, ensuring traffic is routed correctly to the running application instances.**
 ```yaml
 apiVersion: v1
 kind: Service
@@ -152,9 +166,8 @@ spec:
     targetPort: 8080
   type: ClusterIP
 ```
-
-##### ingress
-
+<br/>
+**Managing external access to the application using host-based routing with the use of <ins>**Ingress.yaml**</ins> file, which directs requests to the appropriate service based on the domain name.**
 ```yaml
 apiVersion: networking.k8s.io/v1
 kind: Ingress
@@ -176,3 +189,5 @@ spec:
               number: 80
              number: 80
 ```
+
+By following the steps outlined, we'll be able to deploy our apps seamlessly and achieve the desired states, with external access routed correctly and the apps maintaining high availability.
