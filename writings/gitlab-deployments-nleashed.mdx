@@ -1,0 +1,161 @@
+---
+title: 'GitLab Deployments Unleashed'
+id: 4
+date: Jan 2025
+img: 'https://miro.medium.com/v2/resize:fit:802/1*ipLGe7ipeteg_rJ1N-8D8w.png'
+description: 'Local deployment with GitLab, ArgoCD & K8s.'
+published: true
+---
+
+# 🚀 GitLab Deployments Unleashed
+
+***-- GitLab, ArgoCD & K8s - local deployments made !easy entertaining!***
+
+![alt img](https://miro.medium.com/v2/resize:fit:750/1*rlK-KdbWg_Y9P-dZp1sMcw.png)
+
+
+<br/>
+
+### Intro
+
+Setting up a local Kubernetes environment for deploying applications can be challenging, but the process becomes simpler with GitLab, ArgoCD and K3d.
+
+Together this tools form a seamless and powerful ecosystem that allows to build, test and deploy apps on K8s with minimal effort. By integrating GitLab, ArgoCD and K8s with K3d and Ingress, we can automate the application's lifecycle from development to production on a local machine, which not only speeds up the workflow but also helps catching potential issues early before going live.
+
+### Desired State
+
+We'll set up step by step an environment of deploying K8s using ArgoCD, and access apps through a custom domain with Ingress, all running locally on our machine using K3d.
+
+<br/>
+### Implementation
+
+**① Defining in <ins>app.yaml</ins> our application using ArgoCD, specifying the repository and namespace where the app will be deployed.**
+
+```yaml
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: my-app
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: 'http://gitlab.com/mrz3ln/dev'
+    targetRevision: main
+    path: ./
+  destination:
+    server: 'https://kubernetes.default.svc'
+    namespace: dev
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+```
+<br/>
+<br/>
+
+**② Defining in <ins>deployment.yaml</ins> file the way our app runs in Kubernetes, specifying the number of replicas, container image, and resource settings.**
+
+```yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: my-app
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: my-app
+  template:
+    metadata:
+      labels:
+        app: my-app
+    spec:
+      containers:
+      - name: my-app
+        image: spamerr/app-1:latest
+        ports:
+        - containerPort: 8080
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: app-service
+spec:
+  selector:
+    app: my-app
+  ports:
+    - protocol: TCP
+      port: 8080
+      targetPort: 8080
+  type: LoadBalancer
+```
+<br/>
+<br/>
+
+**③ Customizing in <ins>gitlab-values.yaml</ins> the installation of GitLab with helm on K8s including key settings and resource configurations.**
+
+```yaml
+global:
+  externalUrl: "http://gitlab.local"
+  ingress:
+    configureCertmanager: false
+    class: "nginx"
+  hosts:
+    domain: "gitlab.local"
+    https: false
+  shell:
+    port: 32022
+
+certmanager:
+  install: false
+
+nginx-ingress:
+  enabled: false
+
+prometheus:
+  install: false
+
+gitlab-runner:
+  install: false
+
+gitlab:
+  webservice:
+    minReplicas: 1
+    maxReplicas: 1
+  sidekiq:
+    minReplicas: 1
+    maxReplicas: 1
+  gitlab-shell:
+    minReplicas: 1
+    maxReplicas: 1
+    service:
+      type: NodePort
+      nodePort: 32022
+
+registry:
+  hpa:
+    minReplicas: 1
+    maxReplicas: 1
+```
+<br/>
+<br/>
+
+**④ Automating with <ins>setup.sh</ins> the installation of GitLab using Helm with custom values in the gitlab-values.yaml file, and setup it on the local K8s environment, as well as installing K3d and creating namespaces in the cluster, and automatically applying the deployment.yaml**
+
+```bash
+#!/bin/bash
+set -e
+
+helm repo add gitlab https://charts.gitlab.io/
+helm repo update
+sudo k3d cluster create dev
+sudo kubectl create namespace gitlab
+sudo kubectl create namespace argocd
+sudo kubectl create namespace dev
+sudo helm upgrade gitlab gitlab/gitlab --namespace gitlab -f ./confs/gitlab-values.yaml
+sudo kubectl apply -n dev -f ./confs/deployment.yaml
+```
+<br/>
+
+By the end of this steps of configuration, we'll have a fully automated functional local GitLab-based CI/CD pipeline that automates deployment to Kubernetes, allowing testing, iterating and managing applications just like in a production environment, but all on our local machine.
