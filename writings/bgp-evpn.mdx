@@ -2,36 +2,37 @@
 title: 'BGP-EVPN'
 id: 5
 date: Feb 2025
-img: 'https://uk.usembassy.gov/wp-content/uploads/sites/16/iss042e215971-1068x711-1-1068x684.jpg'
+img: 'https://www.trgdatacenters.com/wp-content/uploads/2022/10/shutterstock_495697993-1920x1080.jpg'
 description: 'BGP At Doors of Autonomous Systems is Simple.'
+tags: ['Networking', 'System administrator']
+readingTime: '5 min'
 published: true
 ---
 
-# 🛜 BGP-EVPN ***-- BGP At Doors of Autonomous Systems is Simple.***
 
-<img alt="img" src="https://i.redd.it/vj3f5o7tnv7d1.png"/>
-###### <ins>Brace yourselves the packets are coming!.</ins>
+<img alt="img" className="w-12 h-12" src="https://i.redd.it/vj3f5o7tnv7d1.png"/>
+<h6 className="mx-auto">Brace yourselves the packets are coming!.</h6>
 
-## ١- Topics
+<h2>١- Topics</h2>
 
-#### AS (Autonomous Systems)
+<h3>AS (Autonomous Systems)</h3>
 
 Autonomous system is a group of networks managed by one organization (Internet Service Provider, Cloud Provider, Enterprises) that shares a common set of routing rules. These organizations control their own AS and decide how data flows in and out of their network while communicating with other networks.
 
 Each AS is assigned by a unique number, known as **Autonomous System Number(ASN)** that helps it exchange routing information with other networks on the internet.
 
 
-#### BGP (Border Gateway Protocol)
+<h3>BGP (Border Gateway Protocol)</h3>
 
 BGP is routing protocol that exchanges network reachability information between routers. In a BGP-EVPN setup, BGP extended to share not only IP prefixes but also MAC and IP address mappings, which enables routers to learn where hosts are located across the entire network.
 
 
-#### VXLAN (Virtual eXtensible Local Area Network)
+<h3>VXLAN (Virtual eXtensible Local Area Network)</h3>
 
 VXLAN is an overlay protocol that encapsulates Layer 2 frames within Layer 3 packets. Allowing to extend VLANs over a larger, IP-based network. Each VXLAN segment is identified by a VXLAN Network Identifier(VNI), ensuring that the encapsulated traffic reaches the correct destination.
 
 
-#### EVPN (Ethernet Virtual Private Network)
+<h3>EVPN (Ethernet Virtual Private Network)</h3>
 
 EVPN is a modern networking technology used to extend Ethernet networks over a large distances, such as between data centers or branch offices. It enables devices in different locations to communicate as if they were on the same network.
 
@@ -39,9 +40,9 @@ EVPN provides Layer 2 and Layer 3 connectivity over a Layer 3 underlay by using 
 
 <br/>
 
-## ٢- How Does This Work?
+<h2>٢- How Does This Work?</h2>
 
-#### Bird View-Eye
+<h3>Bird View-Eye</h3>
 
 Ethernet frames are the fundamental data units at the OSI Layer 2, containing source and destination MAC addresses, Payload data (the actual data being transmitted) and Error-checking informations. VXLAN<ins>**(Data Plane)**</ins> is designed to transport Layer 2 Ethernet frames across a Layer 3 (IP based) network, enabling devices on different physical networks to behave as if they’re on the same local network.
 
@@ -53,7 +54,7 @@ By transporting Ethernet frames, VXLAN<ins>**(Control Plane)**</ins> extends  th
 ###### <ins>AS24 AS46 and AS777 are connected via BGP sessions.</ins>
 
 <br/>
-#### How Does It Work?
+<h3>How Does It Work?</h3>
 
 First step is BGP Peering or establishing connections, BGP routers in different AS form a connection called BGP session, these sessions exchange routing information with their peers.
 
